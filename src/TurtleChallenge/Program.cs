@@ -1,17 +1,21 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TurtleChallenge.Models;
 
 namespace TurtleChallenge
 {
+    /// <summary>
+    /// The program.
+    /// </summary>
     class Program
     {
+        /// <summary>
+        /// Runs the app.
+        /// </summary>
+        /// <param name="args">The input arguments array.</param>
         static void Main(string[] args)
         {
             Console.WriteLine("TurtleChallenge\n");
@@ -47,6 +51,11 @@ namespace TurtleChallenge
             }
         }
 
+        /// <summary>
+        /// Gets the displayable result string from enum result.
+        /// </summary>
+        /// <param name="runResult">The run result enum value.</param>
+        /// <returns>The result string.</returns>
         private static string GetResultString(RunResult runResult)
         {
             return runResult switch
@@ -58,6 +67,12 @@ namespace TurtleChallenge
             };
         }
 
+        /// <summary>
+        /// Reads data from json, given the file name and the type to deserialze to.
+        /// </summary>
+        /// <typeparam name="T">The type to deserialize the data to.</typeparam>
+        /// <param name="fileName">The file name to read.</param>
+        /// <returns>Deserialized data.</returns>
         private static (T, bool) GetFromJson<T>(string fileName)
         {
             try
@@ -76,6 +91,11 @@ namespace TurtleChallenge
             }
         }
 
+        /// <summary>
+        /// Checks whether the arguments are valid.
+        /// </summary>
+        /// <param name="args">The arguments array.</param>
+        /// <returns>The validation flag.</returns>
         private static bool CheckArguments(string[] args)
         {
             if (args.Length != 2)
@@ -111,6 +131,9 @@ namespace TurtleChallenge
             return true;
         }
 
+        /// <summary>
+        /// Prints the error message for missing arguments.
+        /// </summary>
         private static void PrintArgumentsMessage()
         {
             Console.WriteLine("\nExpected arguments:");

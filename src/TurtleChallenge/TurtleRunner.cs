@@ -5,15 +5,30 @@ using TurtleChallenge.Models;
 
 namespace TurtleChallenge
 {
+    /// <summary>
+    /// Contains the turtle runner logic.
+    /// </summary>
     public class TurtleRunner
     {
+        /// <summary>
+        /// The game board data.
+        /// </summary>
         private Board Board { get; }        
 
+        /// <summary>
+        /// Creates an instance of <see cref="TurtleRunner"/> class.
+        /// </summary>
+        /// <param name="board">The game board data.</param>
         public TurtleRunner(Board board)
         {
             Board = board ?? throw new ArgumentNullException(nameof(board));
         }
 
+        /// <summary>
+        /// Executes the runner logic.
+        /// </summary>
+        /// <param name="moveSequence">The <see cref="MoveType"/> move sequence.</param>
+        /// <returns>The run result.</returns>
         public RunResult Run(IEnumerable<MoveType> moveSequence)
         {
             if (moveSequence is null)
@@ -35,6 +50,9 @@ namespace TurtleChallenge
             return RunResult.NotCleared;
         }
 
+        /// <summary>
+        /// Resets the position on the board.
+        /// </summary>
         private void ResetPosition()
         {
             if (Board.CurrentPosition == null)
@@ -47,6 +65,14 @@ namespace TurtleChallenge
             Board.CurrentPosition.Y = Board.StartingPoint.Y;
         }
 
+        /// <summary>
+        /// Performs the move based on the move type.
+        /// </summary>
+        /// <param name="moveType">The move type.</param>
+        /// <returns>The result.</returns>
+        /// <remarks>
+        /// A move can be a step in forward direction or a rotation.
+        /// </remarks>
         private RunResult Move(MoveType moveType)
         {
             switch (moveType)
@@ -61,6 +87,10 @@ namespace TurtleChallenge
             }
         }
 
+        /// <summary>
+        /// Makes a move in the current direction based on the board position and orientation.
+        /// </summary>
+        /// <returns>The result of the move.</returns>
         private RunResult StepInCurrentDirection()
         {            
             switch (Board.CurrentPosition.Direction)
@@ -118,6 +148,14 @@ namespace TurtleChallenge
             }
         }
 
+        /// <summary>
+        /// Gets the current position result.
+        /// </summary>
+        /// <returns>The result.</returns>
+        /// <remarks>
+        /// The calculated current position result indicates whether the game is won,
+        /// lost or is inconclusive after this turn.
+        /// </remarks>
         private RunResult GetCurrentPositionResult()
         {
             if (Board.CurrentPosition.X == Board.ExitPoint.X && Board.CurrentPosition.Y == Board.ExitPoint.Y)
@@ -133,6 +171,9 @@ namespace TurtleChallenge
             return RunResult.NotCleared;
         }
 
+        /// <summary>
+        /// Rotates the position on the board by 90 degrees to the right (clockwise).
+        /// </summary>
         private void Rotate()
         {
             switch (Board.CurrentPosition.Direction)
