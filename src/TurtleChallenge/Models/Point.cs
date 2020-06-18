@@ -2,15 +2,12 @@
 
 namespace TurtleChallenge.Models
 {
-    public class Tile
+    public class Point
     {
         [JsonPropertyName("x")]
         public int X { get; set; }
 
         [JsonPropertyName("y")]
         public int Y { get; set; }
-
-        [JsonPropertyName("type")]
-        public TileType TileType { get; set; }
     }
 }

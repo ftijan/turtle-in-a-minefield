@@ -1,4 +1,5 @@
 ﻿using System;
+using TurtleChallenge.Models;
 
 namespace TurtleChallenge
 {
