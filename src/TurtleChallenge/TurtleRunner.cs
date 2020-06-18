@@ -97,7 +97,7 @@ namespace TurtleChallenge
             {
                 case Direction.North:
                     // y - 1
-                    if (Board.CurrentPosition.Y - 1 <= 0)
+                    if (Board.CurrentPosition.Y - 1 < 0)
                     {
                         // skip turn
                         return RunResult.NotCleared;
@@ -109,7 +109,7 @@ namespace TurtleChallenge
                     }                    
                 case Direction.East:
                     // x + 1
-                    if (Board.CurrentPosition.X + 1 >= Board.BoardSize.X)
+                    if (Board.CurrentPosition.X + 1 > Board.BoardSize.X)
                     {
                         // skip turn
                         return RunResult.NotCleared;
@@ -121,7 +121,7 @@ namespace TurtleChallenge
                     }                    
                 case Direction.South:
                     // y + 1
-                    if (Board.CurrentPosition.Y + 1 >= Board.BoardSize.Y)
+                    if (Board.CurrentPosition.Y + 1 > Board.BoardSize.Y)
                     {
                         // skip turn
                         return RunResult.NotCleared;
@@ -133,7 +133,7 @@ namespace TurtleChallenge
                     }                    
                 case Direction.West:
                     // x - 1
-                    if (Board.CurrentPosition.X - 1 <= 0)
+                    if (Board.CurrentPosition.X - 1 < 0)
                     {
                         // skip turn
                         return RunResult.NotCleared;
