@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TurtleChallenge": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\code\\fonua-exercise\\game-settings.json D:\\code\\fonua-exercise\\moves.json"
+    }
+  }
+}

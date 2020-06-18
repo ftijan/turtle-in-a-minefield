@@ -37,6 +37,11 @@ namespace TurtleChallenge
 
         private void ResetPosition()
         {
+            if (Board.CurrentPosition == null)
+            {
+                Board.CurrentPosition = new DirectionPoint();
+            }
+
             Board.CurrentPosition.Direction = Board.StartingPoint.Direction;
             Board.CurrentPosition.X = Board.StartingPoint.X;
             Board.CurrentPosition.Y = Board.StartingPoint.Y;
