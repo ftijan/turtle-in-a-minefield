@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using TurtleChallenge.Models;
 
 namespace TurtleChallenge
@@ -9,6 +12,63 @@ namespace TurtleChallenge
     /// </summary>
     public static class Extensions
     {
+        /// <summary>
+        /// The JSON deserializer options.
+        /// </summary>
+        public static JsonSerializerOptions DeserializerOptions { get; set; }
+
+        /// <summary>
+        /// Runs the initialization of <see cref="Extensions"/> class on first invoke.
+        /// </summary>
+        static Extensions()
+        {
+            DeserializerOptions = new JsonSerializerOptions();
+            DeserializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+        }
+
+        /// <summary>
+        /// Reads data from json, given the file name and the type to deserialize to.
+        /// </summary>
+        /// <typeparam name="T">The type to deserialize the data to.</typeparam>
+        /// <param name="fileName">The file name to read.</param>
+        /// <returns>Deserialized data.</returns>
+        public static (T, bool) GetFromJson<T>(string fileName)
+        {
+            try
+            {
+                var jsonString = File.ReadAllText(fileName);                
+
+                var data = JsonSerializer.Deserialize<T>(jsonString, DeserializerOptions);
+                return (data, true);
+            }
+            catch (JsonException)
+            {
+                return (default(T), false);
+            }
+        }
+
+        /// <summary>
+        /// Reads data from json, given the source stream and the type to deserialize to.
+        /// </summary>
+        /// <typeparam name="T">The type to deserialize the data to.</typeparam>
+        /// <param name="fileName">The stream to read.</param>
+        /// <returns>Deserialized data.</returns>
+        public static (T, bool) GetFromJson<T>(Stream resourceStream)
+        {
+            try
+            {
+                using var reader = new StreamReader(resourceStream);
+                var jsonString = reader.ReadToEnd();
+
+                var data = JsonSerializer.Deserialize<T>(jsonString, DeserializerOptions);
+                return (data, true);
+            }
+            catch (JsonException)
+            {
+                return (default(T), false);
+            }
+        }
+
         /// <summary>
         /// Validates the board settings.
         /// </summary>
