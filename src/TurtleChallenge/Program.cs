@@ -42,6 +42,20 @@ namespace TurtleChallenge
                 return;
             }
 
+            var boardValidationResult = boardData.Validate();
+
+            if (boardValidationResult.IsValid == false)
+            {
+                Console.WriteLine("Board settings are invalid.");
+
+                foreach (var message in boardValidationResult.ValidationMessages)
+                {
+                    Console.WriteLine(message);
+                }
+
+                return;
+            }
+
             var turtleRunner = new TurtleRunner(boardData);
 
             for (int i = 0; i < movesData.Count; i++)
