@@ -20,12 +20,12 @@ namespace TurtleChallenge
             
             if (board.BoardSize.X < 2)
             {
-                validationMessages.Add("Board size: X smaller than 2");
+                validationMessages.Add("Field size: X smaller than 2");
             }
 
             if (board.BoardSize.Y < 2)
             {
-                validationMessages.Add("Board size: Y smaller than 2");
+                validationMessages.Add("Field size: Y smaller than 2");
             }
 
             if (board.StartingPoint.X >= board.BoardSize.X || board.StartingPoint.X < 0)

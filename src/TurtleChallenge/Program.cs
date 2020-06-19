@@ -46,7 +46,7 @@ namespace TurtleChallenge
 
             if (boardValidationResult.IsValid == false)
             {
-                Console.WriteLine("Board settings are invalid.");
+                Console.WriteLine("Game settings are invalid.");
 
                 foreach (var message in boardValidationResult.ValidationMessages)
                 {
