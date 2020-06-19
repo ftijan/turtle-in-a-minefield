@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using TurtleChallenge.Models;
 
 namespace TurtleChallenge
@@ -26,7 +24,7 @@ namespace TurtleChallenge
                 return;
             }
 
-            (Board boardData, bool boardReadResult) = GetFromJson<Board>(args[0]);
+            (Board boardData, bool boardReadResult) = Extensions.GetFromJson<Board>(args[0]);
 
             if (boardReadResult == false)
             {
@@ -34,11 +32,25 @@ namespace TurtleChallenge
                 return;
             }
 
-            (IList<IEnumerable<MoveType>> movesData, bool movesReadResult) = GetFromJson<IList<IEnumerable<MoveType>>>(args[1]);
+            (IList<IEnumerable<MoveType>> movesData, bool movesReadResult) = Extensions.GetFromJson<IList<IEnumerable<MoveType>>>(args[1]);
 
             if (movesReadResult == false)
             {
                 Console.WriteLine("Moves file contains invalid JSON. Exiting...");
+                return;
+            }
+
+            var boardValidationResult = boardData.Validate();
+
+            if (boardValidationResult.IsValid == false)
+            {
+                Console.WriteLine("Game settings are invalid.");
+
+                foreach (var message in boardValidationResult.ValidationMessages)
+                {
+                    Console.WriteLine(message);
+                }
+
                 return;
             }
 
@@ -65,31 +77,7 @@ namespace TurtleChallenge
                 RunResult.NotCleared => "Still in danger",
                 _ => throw new ArgumentException(nameof(runResult)),
             };
-        }
-
-        /// <summary>
-        /// Reads data from json, given the file name and the type to deserialze to.
-        /// </summary>
-        /// <typeparam name="T">The type to deserialize the data to.</typeparam>
-        /// <param name="fileName">The file name to read.</param>
-        /// <returns>Deserialized data.</returns>
-        private static (T, bool) GetFromJson<T>(string fileName)
-        {
-            try
-            {
-                var jsonString = File.ReadAllText(fileName);
-
-                var deserializerOptions = new JsonSerializerOptions();
-                deserializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-
-                var data = JsonSerializer.Deserialize<T>(jsonString, deserializerOptions);
-                return (data, true);
-            }
-            catch (JsonException)
-            {                
-                return (default(T), false);
-            }
-        }
+        }        
 
         /// <summary>
         /// Checks whether the arguments are valid.
